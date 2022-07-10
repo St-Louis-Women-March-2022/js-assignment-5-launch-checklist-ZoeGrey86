@@ -4,7 +4,7 @@ require('isomorphic-fetch');
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
    // Here is the HTML formatting for our mission target div.
    const missionTarget = document.getElementById("missionTarget");
-         missionTarget.innerHTML +=`
+         missionTarget.innerHTML =`
           <h2>Mission Destination</h2>
                 <ol>
                     <li>Name: ${name}</li>
@@ -18,48 +18,57 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
 }
 
 function validateInput(testInput) {
-    if (testInput.value === ""){
-        testInput.value = "empty"
+    if (testInput === "") {
+        testInput = "empty"
         alert("all fields are required")
-     }else if(isNaN(testInput.value) === 'true'){
-         testInput.value = "not a number"
-     }else if(isNaN(testInput.value) === 'false'){
-         testInput.value = 'is a number'
-     }
-     return testInput
+    } else if (isNaN(testInput) === 'true') {
+        testInput = "not a number"
+    } else if (isNaN(testInput) === 'false') {
+        testInput= 'is a number'
+    }
+    return testInput
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-    list = this.list;
-    let pilotStatus = this.document.getElementById('pilotStatus');
-    let copilotStatus = this.document.getElementById('copilotStatus');
-    let fuelStatus = this.document.getElementById('fuelStatus');
-    let cargoStatus = this.document.getElementById('cargoStatus');
-     let Fault = this.document.getElementById("faultyItems");
-     let launchStatus =this.document.getElementById("launchStatus");
-     let launchStatusCheck = this.document.getElementById("launchStatusCheck");
-      if(validateInput(pilot)=== "empty"){
+     
+     let pilotStatus = document.getElementById('pilotStatus');
+     let copilotStatus = document.getElementById('copilotStatus');
+     let fuelStatus = document.getElementById('fuelStatus');
+     let cargoStatus = document.getElementById('cargoStatus');
+     let Fault = document.getElementById("faultyItems");
+     let launchStatus =document.getElementById("launchStatus");
+     let launchStatusCheck = document.getElementById("launchStatusCheck");
+     let testpilot = validateInput(pilot);
+     let testcopilot = validateInput(copilot);
+     let testfuel = validateInput(fuelLevel);
+     let testcargo = validateInput(cargoLevel);
+      if(testpilot === "empty"){
           pilotStatus.innerHTML = "not ready";
           Fault.style.visibility = visible;
           launchStatus.innerHTML = "Shuttle not ready for launch"
           launchStatusCheck.style.backgroundColor = 'red';
-     }else if(validateInput(copilot)==="empty"){
+     }else if(testcopilot==="empty"){
           copilotStatus.innerHTML = "not ready";
           Fault.style.visibility = visible;
           launchStatus.innerHTML = "Shuttle not ready for launch"
           launchStatusCheck.style.backgroundColor = 'red';
-     }else if(validateInput(fuelLevel)==="not a number" || fuelLevel < 10000){
+     }else if(testfuel === "not a number" || fuelLevel < 10000){
           fuelStatus.innerHTML = "not ready";
           Fault.style.visibility = visible;
           launchStatus.innerHTML = "Shuttle not ready for launch"
           launchStatusCheck.color = "red";
-     }else if(validateInput(cargoLevel)==="not a number" || cargoLevel > 10000){
+     }else if(testcargo === "not a number" || cargoLevel > 10000){
           cargoStatus.innerHTML = "not ready";
           Fault.style.visibility = visible;
           launchStatus.innerHTML = "Shuttle not ready for launch";
-          launchStatusCheck.color = "red";
+          launchStatusCheck.style.color = "red";
      }else{launchStatus.innerHTML = "Shuttle ready for launch";
-          launchStatusCheck.color = "green";} 
+          launchStatusCheck.style.color = "green";
+          pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
+          copilotStatus.innerHTML = `Co-Pilot ${copilot} is ready for launch`;
+          fuelStatus.innerHTML = `Fuel level is enough for launch`;
+          cargoStatus.innerHTML = `Cargo mass low enough for launch`;
+        } 
 }
 
 async function myFetch() {
