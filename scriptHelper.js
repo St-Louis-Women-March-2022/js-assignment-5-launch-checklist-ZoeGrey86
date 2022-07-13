@@ -114,14 +114,6 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     });
 }
 
-faultyItems.style.visibility = "visible";
-            launchStatus.innerHTML = `Shuttle not ready for launch.`;
-            launchStatus.style.color ="rgb(199, 37, 78)";
-
-
-
-
-
 async function myFetch() {
     const planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
         return response.json();
